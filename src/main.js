@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+
+//路由环境
 import router from 'router'
 
 //mock
