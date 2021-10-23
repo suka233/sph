@@ -10,11 +10,19 @@
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
+import {mapActions} from 'vuex'
+// import {getBaseCategoryList} from 'http'
 export default {
   name: 'App',
   components:{
     Header,
     Footer
+  },
+methods:{
+    ...mapActions(["getCategoryList"])
+},
+  created() {
+    this.getCategoryList();
   }
 }
 </script>
