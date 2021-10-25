@@ -10,7 +10,7 @@
             <div class="item"
                  v-for="(c1,index) in categoryList"
                  :key="c1.categoryId"
-                 @mouseenter="currentIndex=index"
+                 @mouseenter="itemHoverFn(index)"
                  :class="{itemHover:currentIndex===index}"
             >
               <h3>
@@ -52,6 +52,7 @@
 
 <script>
 import {mapState} from 'vuex'
+import throttle from 'lodash/throttle'
 export default {
   name: "TypeNav",
   data(){
@@ -63,6 +64,9 @@ export default {
     ...mapState({categoryList: state => state.home.categoryList})
   },
   methods:{
+    itemHoverFn: throttle(function (index){
+        this.currentIndex = index
+      },100)
 
   }
 }
