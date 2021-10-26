@@ -2,8 +2,9 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="currentIndex=-1">
+      <div @mouseleave="currentIndex=-2" @mouseenter="currentIndex=-1">
         <h2 class="all">全部商品分类</h2>
+<!--        三级分类-->
         <div class="sort">
           <div class="all-sort-list2">
             <!--          一级分类-->
@@ -57,7 +58,8 @@ export default {
   name: "TypeNav",
   data(){
     return {
-      currentIndex: -1
+      //-2代表鼠标在三级列表外,-1代表鼠标在三级列表内
+      currentIndex: -2
     }
   },
   computed:{
@@ -65,7 +67,8 @@ export default {
   },
   methods:{
     itemHoverFn: throttle(function (index){
-        this.currentIndex = index
+      //只有鼠标在一级分类上的时候 才允许它改变
+      if(this.currentIndex>-2) this.currentIndex = index
       },100)
 
   }
