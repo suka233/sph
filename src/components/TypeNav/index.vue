@@ -4,8 +4,9 @@
     <div class="container">
       <div @mouseleave="currentIndex=-2" @mouseenter="currentIndex=-1">
         <h2 class="all">全部商品分类</h2>
-<!--        三级分类-->
-        <div class="sort">
+<!--        三级分类列表-->
+        <div class="sort"
+        @click="sortFn">
           <div class="all-sort-list2">
             <!--          一级分类-->
             <div class="item"
@@ -15,19 +16,25 @@
                  :class="{itemHover:currentIndex===index}"
             >
               <h3>
-                <a href="">{{c1.categoryName}}</a>
+                <a href="javascript:;"
+                   :data-categoryname="c1.categoryName"
+                   :data-category1id="c1.categoryId">{{c1.categoryName}}</a>
               </h3>
               <div class="item-list clearfix">
                 <div class="subitem">
                   <!--                二级分类-->
                   <dl class="fore" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                     <dt>
-                      <a href="">{{c2.categoryName}}</a>
+                      <a href="javascript:;"
+                         :data-categoryname="c2.categoryName"
+                         :data-category2id="c2.categoryId">{{c2.categoryName}}</a>
                     </dt>
                     <dd>
                       <!--                    三级分类-->
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{c3.categoryName}}</a>
+                        <a href="javascript:;"
+                           :data-categoryname="c3.categoryName"
+                           :data-category3id="c3.categoryId">{{c3.categoryName}}</a>
                       </em>
                     </dd>
                   </dl>
@@ -66,11 +73,22 @@ export default {
     ...mapState({categoryList: state => state.home.categoryList})
   },
   methods:{
+    //三级分类显示隐藏防抖
     itemHoverFn: throttle(function (index){
       //只有鼠标在一级分类上的时候 才允许它改变
       if(this.currentIndex>-2) this.currentIndex = index
-      },100)
-
+      },100),
+    //三级分类的事件委托
+    sortFn(event){
+      //如果不是a标签,则啥也不做
+      if (event.target.nodeName.toLowerCase() !== "a") return
+      let location = {
+        name:"Search"
+      }
+      let {categoryname,category1id,category2id,category3id} = event.target.dataset;
+      location.query = {categoryname,category1id,category2id,category3id}
+      this.$router.push(location)
+    }
   }
 }
 </script>
