@@ -6,7 +6,7 @@
         <h2 class="all">全部商品分类</h2>
 <!--        三级分类列表-->
         <div class="sort"
-        @click="sortFn">
+        @click="toSearch">
           <div class="all-sort-list2">
             <!--          一级分类-->
             <div class="item"
@@ -79,7 +79,7 @@ export default {
       if(this.currentIndex>-2) this.currentIndex = index
       },100),
     //三级分类的事件委托
-    sortFn(event){
+    toSearch(event){
       //如果不是a标签,则啥也不做
       if (event.target.nodeName.toLowerCase() !== "a") return
       let location = {
