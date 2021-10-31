@@ -6,7 +6,8 @@
         <h2 class="all">全部商品分类</h2>
 <!--        三级分类列表-->
         <div class="sort"
-        @click="toSearch">
+        @click="toSearch"
+        v-show="sortStatus">
           <div class="all-sort-list2">
             <!--          一级分类-->
             <div class="item"
@@ -70,7 +71,11 @@ export default {
     }
   },
   computed:{
-    ...mapState({categoryList: state => state.home.categoryList})
+    ...mapState({categoryList: state => state.home.categoryList}),
+    sortStatus(){
+      //如果当前路由在主页或者鼠标移入的情况下,那么就显示
+      return ["/","/Home"].includes(this.$route.path) || this.currentIndex > -2
+    }
   },
   methods:{
     //三级分类显示隐藏防抖
