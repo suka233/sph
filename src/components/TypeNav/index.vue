@@ -5,45 +5,48 @@
       <div @mouseleave="currentIndex=-2" @mouseenter="currentIndex=-1">
         <h2 class="all">全部商品分类</h2>
 <!--        三级分类列表-->
-        <div class="sort"
-        @click="toSearch"
-        v-show="sortStatus">
-          <div class="all-sort-list2">
-            <!--          一级分类-->
-            <div class="item"
-                 v-for="(c1,index) in categoryList"
-                 :key="c1.categoryId"
-                 @mouseenter="itemHoverFn(index)"
-                 :class="{itemHover:currentIndex===index}"
-            >
-              <h3>
-                <a href="javascript:;"
-                   :data-categoryname="c1.categoryName"
-                   :data-category1id="c1.categoryId">{{c1.categoryName}}</a>
-              </h3>
-              <div class="item-list clearfix">
-                <div class="subitem">
-                  <!--                二级分类-->
-                  <dl class="fore" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
-                    <dt>
-                      <a href="javascript:;"
-                         :data-categoryname="c2.categoryName"
-                         :data-category2id="c2.categoryId">{{c2.categoryName}}</a>
-                    </dt>
-                    <dd>
-                      <!--                    三级分类-->
-                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+        <transition name="sort">
+          <div class="sort"
+               @click="toSearch"
+               v-show="sortStatus">
+            <div class="all-sort-list2">
+              <!--          一级分类-->
+              <div class="item"
+                   v-for="(c1,index) in categoryList"
+                   :key="c1.categoryId"
+                   @mouseenter="itemHoverFn(index)"
+                   :class="{itemHover:currentIndex===index}"
+              >
+                <h3>
+                  <a href="javascript:;"
+                     :data-categoryname="c1.categoryName"
+                     :data-category1id="c1.categoryId">{{c1.categoryName}}</a>
+                </h3>
+                <div class="item-list clearfix">
+                  <div class="subitem">
+                    <!--                二级分类-->
+                    <dl class="fore" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+                      <dt>
                         <a href="javascript:;"
-                           :data-categoryname="c3.categoryName"
-                           :data-category3id="c3.categoryId">{{c3.categoryName}}</a>
-                      </em>
-                    </dd>
-                  </dl>
+                           :data-categoryname="c2.categoryName"
+                           :data-category2id="c2.categoryId">{{c2.categoryName}}</a>
+                      </dt>
+                      <dd>
+                        <!--                    三级分类-->
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a href="javascript:;"
+                             :data-categoryname="c3.categoryName"
+                             :data-category3id="c3.categoryId">{{c3.categoryName}}</a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
+
       </div>
       <nav class="nav">
         <a href="###">服装城</a>

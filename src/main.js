@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+//引入动效样式
+import "../public/css/transition.less"
+
 //路由环境
 import router from 'router'
 
