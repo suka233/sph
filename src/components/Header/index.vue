@@ -59,6 +59,10 @@ export default {
       }
       //记得把params的属性封装成键名为keyword的对象!
       this.keyword ? location.params = {keyword:this.keyword} : ""
+
+      //合并query到location上
+      location.query = this.$route.query
+
       this.$router.push(location)
     }
   }

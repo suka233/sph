@@ -95,6 +95,10 @@ export default {
       }
       let {categoryname,category1id,category2id,category3id} = event.target.dataset;
       location.query = {categoryname,category1id,category2id,category3id}
+
+      //合并params到location上
+      location.params = this.$route.params
+
       this.$router.push(location)
 
       //三级分类跳转后则隐藏,因为显隐藏我用的是计算属性,所以这里我只需要更改计算属性的依赖即可
