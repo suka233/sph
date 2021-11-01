@@ -19,11 +19,12 @@ export default {
     Footer
   },
 methods:{
-    ...mapActions(["getCategoryList","getBanners"])
+    ...mapActions(["getCategoryList","getBanners","getFloors"])
 },
   created() {
     this.getCategoryList();
     this.getBanners();
+    this.getFloors();
   }
 }
 </script>

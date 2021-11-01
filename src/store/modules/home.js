@@ -1,9 +1,10 @@
-import {getBaseCategoryList,getBanners} from 'http'
+import {getBaseCategoryList,getBanners,getFloors} from 'http'
 
 export default {
     state:{
         categoryList:[],
-        banners:[]
+        banners:[],
+        floors:[]
     },
     mutations:{
         getCategoryList(state,categoryList){
@@ -11,6 +12,9 @@ export default {
         },
         getBanners(state,banners){
             state.banners = banners
+        },
+        getFloors(state,floors){
+            state.floors = floors
         }
     },
     actions:{
@@ -23,6 +27,11 @@ export default {
         async getBanners({commit}){
             const {data} = await getBanners()
             commit('getBanners',data)
+        },
+        //楼层数据
+        async getFloors({commit}){
+            const {data} = await getFloors()
+            commit('getFloors',data)
         }
     },
     getters:{
