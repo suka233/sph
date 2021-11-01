@@ -74,9 +74,11 @@ export default {
     }
   },
   computed:{
-    ...mapState({categoryList: state => state.home.categoryList}),
+    ...mapState(
+        {categoryList: state => state.home.categoryList},
+    ),
+    //如果当前路由在主页或者鼠标移入的情况下,那么就显示
     sortStatus(){
-      //如果当前路由在主页或者鼠标移入的情况下,那么就显示
       return ["/","/Home"].includes(this.$route.path) || this.currentIndex > -2
     }
   },

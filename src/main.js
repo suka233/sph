@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+//引入轮播图样式
+import 'swiper/swiper-bundle.min.css'
+
 //引入动效样式
 import "common/css/transition.less"
 
