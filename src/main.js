@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+//全局注册轮播图组件
+import carousel from 'components/Carousel'
+Vue.component('Carousel',carousel)
+
 //引入轮播图样式
 import 'swiper/swiper-bundle.min.css'
 
