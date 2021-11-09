@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+//全局注册星星组件
+import stars from "components/Stars"
+Vue.component("Stars",stars)
+
 //全局注册轮播图组件
 import carousel from 'components/Carousel'
 Vue.component('Carousel',carousel)

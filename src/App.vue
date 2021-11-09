@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <router-view></router-view>
-    <Footer v-show="!$route.meta.hideFooter"></Footer>
+    <Stars size="24" :score="4.1" :length="6"></Stars>
+    <Stars size="36" :score="4.5"></Stars>
+    <Stars size="48" :score="4.1" ></Stars>
+<!--    <Header></Header>-->
+<!--    <router-view></router-view>-->
+<!--    <Footer v-show="!$route.meta.hideFooter"></Footer>-->
   </div>
 </template>
 
