@@ -2,16 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 
 //全局注册Icon组件
-import icon from "components/Icon"
-Vue.component("Icon",icon)
+import Icon from "components/Icon"
+Vue.component("Icon",Icon)
 
 //全局注册星星组件
-import stars from "components/Stars"
-Vue.component("Stars",stars)
+import Stars from "components/Stars"
+Vue.component("Stars",Stars)
 
 //全局注册轮播图组件
-import carousel from 'components/Carousel'
-Vue.component('Carousel',carousel)
+import Carousel from 'components/Carousel'
+Vue.component('Carousel',Carousel)
 
 //引入轮播图样式
 import 'swiper/swiper-bundle.min.css'
