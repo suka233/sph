@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+//全局注册分页组件
+import Pagination from "components/Pagination"
+Vue.component("Pagination",Pagination)
+
 //全局注册Icon组件
 import Icon from "components/Icon"
 Vue.component("Icon",Icon)
