@@ -2,10 +2,10 @@
   <div id="app">
 <!--    <Stars size="24" :score="4.1" :length="6"></Stars>-->
 <!--    <Icon type="invoice" :size="12" styles="solid"></Icon>-->
-<!--    <Header></Header>-->
-<!--    <router-view></router-view>-->
-<!--    <Footer v-show="!$route.meta.hideFooter"></Footer>-->
-    <Pagination :total="59" :itemsPerPage="10" :pagesNum="3" @getCurrentPage="getCurrentPage" :currentPageFromWrap="2"></Pagination>
+    <Header></Header>
+    <router-view></router-view>
+    <Footer v-show="!$route.meta.hideFooter"></Footer>
+<!--    <Pagination :total="59" :itemsPerPage="10" :pagesNum="3" @getCurrentPage="getCurrentPage" :currentPageFromWrap="2"></Pagination>-->
   </div>
 </template>
 
@@ -23,9 +23,10 @@ export default {
   },
 methods:{
     ...mapActions(["getCategoryList","getBanners","getFloors"]),
+  //获取分页组件中当前的页码
   getCurrentPage(currentPage){
       //子向父的数据传递,记得要在模板上加上自定义事件,否则不生效!!
-      // console.log(currentPage)
+      console.log(currentPage)
   }
 },
   created() {
