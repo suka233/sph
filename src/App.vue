@@ -14,7 +14,7 @@
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import {mapActions} from 'vuex'
-// import {getBaseCategoryList} from 'http'
+import {getBaseCategoryList} from 'http'
 export default {
   name: 'App',
   components:{

@@ -20,7 +20,10 @@ export default {
     actions:{
         //获取三级列表
         async getCategoryList({commit}){
-            const {data} = await getBaseCategoryList()
+            // const {data} = await getBaseCategoryList()
+            //上面的那个是mock的接口,下面的是我自己写的接口
+            //由于我自己写的接口不太规范,直接返回数据,也没有状态码啥的,规范的数据应该封装在data内!并附上状态码!
+            const data = await getBaseCategoryList()
             commit('getCategoryList',data)
         },
         //获取轮播图
