@@ -5,7 +5,6 @@
     <Header></Header>
     <router-view></router-view>
     <Footer v-show="!$route.meta.hideFooter"></Footer>
-<!--    <Pagination :total="59" :itemsPerPage="10" :pagesNum="3" @getCurrentPage="getCurrentPage" :currentPageFromWrap="2"></Pagination>-->
   </div>
 </template>
 
@@ -14,7 +13,6 @@
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import {mapActions} from 'vuex'
-import {getBaseCategoryList} from 'http'
 export default {
   name: 'App',
   components:{
