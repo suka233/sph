@@ -81,7 +81,8 @@
           </div>
           <!--分页组件-->
           <Pagination class="fr page"
-              :total="goods.total" :itemsPerPage="options.pageSize" :pagesNum="3" @getCurrentPage="getGoods_changePage"
+                      :total="goods.total" :itemsPerPage="options.pageSize" :pagesNum="3"
+                      @getCurrentPage="getGoods_changePage"
                       :currentPageFromWrap="1"></Pagination>
         </div>
       </div>
@@ -104,7 +105,15 @@ export default {
     return {
       options: {
         pageNo: 1,
-        pageSize: 4
+        pageSize: 2,
+        keyword: "",
+        category1Id: "",
+        category2Id: "",
+        category3Id: "",
+        categoryName: "",
+        props: [],
+        trademark: "",
+        order: ""
       }
     }
   },
@@ -112,15 +121,46 @@ export default {
   methods: {
     ...mapActions(["getGoods"]),
     //根据pageNo更新options 并且发送请求
-    getGoods_changePage(pageNo=1){
+    getGoods_changePage(pageNo = 1) {
       this.options.pageNo = pageNo
+      this.updateOptions()
       this.getGoods(this.options)
+      console.log(this.options);
+    },
+    //更新一下options
+    updateOptions() {
+      this.options = {
+        ...this.options,
+        keyword: this.keyword,
+        category1Id: this.category1id,
+        category2Id: this.category2id,
+        category3Id: this.category3id,
+        categoryName: this.categoryname,
+        props: [],
+        trademark: "",
+        order: ""
+      }
     }
   },
   computed: {
     ...mapState({goods: state => state.search.goods})
   },
+  watch: {
+    //根据路由的更新来发送查询请求
+    $route: {
+      handler() {
+        //更新一下options
+        this.updateOptions()
+        //发送请求
+        this.getGoods_changePage()
+      },
+      deep: true
+    }
+  },
   created() {
+    //更新一下options
+    this.updateOptions()
+    //发送请求
     this.getGoods_changePage()
   }
 }
