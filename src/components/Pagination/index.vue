@@ -137,6 +137,20 @@ export default {
       this.currentPage = index;
       //准备做的:子向父的数据传递,传递currentPage
       this.$emit('getCurrentPage',index)
+      // console.log(`分页组件内部的值:${this.currentPage}`)
+    }
+  },
+  watch:{
+    //这个watch是为了解决bug:不知道为啥,currentPageFromWrap变化时,currentPage只有第一次会变化
+    // 这就导致,组件外部刷新网页,传入currentPageFromWrap,希望分页组件也自动更新,但是只有首次生效
+    // 所以我就用devTool看到,newCurrentPage是会随着currentPageFromWrap变化的
+    // 所以在newCurrentPage变化的时候,重新给currentPage赋值即可
+
+    //可能的原因:有可能data里转存数据的时候,props的数据还没传递过来,那这个转存到的数据就为空,意思就失败了
+    newCurrentPage:{
+      handler(val){
+        this.currentPage = val
+      }
     }
   }
 }

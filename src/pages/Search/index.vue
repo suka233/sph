@@ -83,7 +83,7 @@
           <Pagination class="fr page"
                       :total="goods.total" :itemsPerPage="options.pageSize" :pagesNum="3"
                       @getCurrentPage="getGoods_changePage"
-                      :currentPageFromWrap="1"></Pagination>
+                      :currentPageFromWrap="options.pageNo"></Pagination>
         </div>
       </div>
     </div>
@@ -125,7 +125,6 @@ export default {
       this.options.pageNo = pageNo
       this.updateOptions()
       this.getGoods(this.options)
-      console.log(this.options);
     },
     //更新一下options
     updateOptions() {
@@ -136,7 +135,7 @@ export default {
         category2Id: this.category2id,
         category3Id: this.category3id,
         categoryName: this.categoryname,
-        props: [],
+        props: '',//老师教的里面要定义成拼装数组,我直接定义成字符串,方便我自己写的后台查询
         trademark: "",
         order: ""
       }
@@ -149,12 +148,16 @@ export default {
     //根据路由的更新来发送查询请求
     $route: {
       handler() {
+        //清除一下pageNo
+        this.options.pageNo = 1
         //更新一下options
         this.updateOptions()
         //发送请求
         this.getGoods_changePage()
+        //这里有个需要修复的Bug:分页组件的状态不会自动变化
       },
-      deep: true
+      deep: true,
+      immediate:true
     }
   },
   created() {
