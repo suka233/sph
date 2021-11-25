@@ -11,15 +11,14 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="options.categoryName">{{options.categoryName}}<i @click="removeCategoryname">×</i></li>
+            <li class="with-x" v-if="options.keyword">{{options.keyword}}<i @click="removeKeyword">×</i></li>
+            <li class="with-x" v-for="(prop,index) in options.props" :key="index" @click="removeProps(index)">{{prop}}<i>×</i></li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector/>
+        <SearchSelector @searchByAttr="searchByAttr"></SearchSelector>
 
         <!--details-->
         <div class="details clearfix">
@@ -139,6 +138,29 @@ export default {
         trademark: "",
         order: ""
       }
+    },
+    //根据商品属性查找
+    searchByAttr(props){
+      //由于后端我自己写的查询不完善,通过属性查找没写好
+      // 我也不准备优化查询功能了,能实现前端功能即可
+      this.options.props = props
+      // this.getGoods_changePage()
+    },
+
+    //移除面包屑导航的相关属性
+    removeCategoryname(){
+      this.options.categoryName = ''
+      //重新发送请求
+      // this.getGoods_changePage()
+    },
+    removeKeyword(){
+      this.options.keyword = ''
+      //重新发送请求
+      // this.getGoods_changePage()
+    },
+    removeProps(index){
+      // console.log(index)
+      this.options.props.splice(index,1)
     }
   },
   computed: {
@@ -165,6 +187,7 @@ export default {
     this.updateOptions()
     //发送请求
     this.getGoods_changePage()
+    //转存props数据到data里
   }
 }
 </script>
