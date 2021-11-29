@@ -11,9 +11,11 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x" v-if="options.categoryName">{{options.categoryName}}<i @click="removeCategoryname">×</i></li>
-            <li class="with-x" v-if="options.keyword">{{options.keyword}}<i @click="removeKeyword">×</i></li>
-            <li class="with-x" v-for="(prop,index) in options.props" :key="index" @click="removeProps(index)">{{prop}}<i>×</i></li>
+            <li class="with-x" v-if="options.categoryName">{{ options.categoryName }}<i
+                @click="removeCategoryname">×</i></li>
+            <li class="with-x" v-if="options.keyword">{{ options.keyword }}<i @click="removeKeyword">×</i></li>
+            <li class="with-x" v-for="(prop,index) in options.props" :key="index" @click="removeProps(index)">{{ prop }}<i>×</i>
+            </li>
           </ul>
         </div>
 
@@ -26,23 +28,35 @@
             <div class="navbar-inner filter">
               <!--排序-->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li
+                    :class="{active:isActive('1')}"
+                    @click="orderFn('1')"
+                >
+                  <a href="javascript:;">综合
+                    <i v-if="options.order.split(':')[0]==='1'"
+                       class="iconfont"
+                       :class="[orderClass]"
+                    ></i>
+                  </a>
                 </li>
                 <li>
-                  <a href="#">销量</a>
+                  <a href="javascript:;">销量</a>
                 </li>
                 <li>
-                  <a href="#">新品</a>
+                  <a href="javascript:;">新品</a>
                 </li>
                 <li>
-                  <a href="#">评价</a>
+                  <a href="javascript:;">评价</a>
                 </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li
+                    :class="{active:isActive('2')}"
+                    @click="orderFn('2')"
+                >
+                  <a href="javascript:;">价格
+                    <i
+                        v-if="options.order.split(':')[0]==='2'"
+                        class="iconfont"
+                        :class="[orderClass]"></i></a>
                 </li>
               </ul>
             </div>
@@ -112,8 +126,9 @@ export default {
         categoryName: "",
         props: [],
         trademark: "",
-        order: ""
-      }
+        order: "1:desc"
+      },
+      currentIndex: 1
     }
   },
   props: ["keyword", "categoryname", "category1id", "category2id", "category3id"],
@@ -136,11 +151,11 @@ export default {
         categoryName: this.categoryname,
         props: '',//老师教的里面要定义成拼装数组,我直接定义成字符串,方便我自己写的后台查询
         trademark: "",
-        order: ""
+        // order: ""
       }
     },
     //根据商品属性查找
-    searchByAttr(props){
+    searchByAttr(props) {
       //由于后端我自己写的查询不完善,通过属性查找没写好
       // 我也不准备优化查询功能了,能实现前端功能即可
       this.options.props = props
@@ -148,23 +163,59 @@ export default {
     },
 
     //移除面包屑导航的相关属性
-    removeCategoryname(){
+    removeCategoryname() {
       this.options.categoryName = ''
       //重新发送请求
       // this.getGoods_changePage()
     },
-    removeKeyword(){
+    removeKeyword() {
       this.options.keyword = ''
       //重新发送请求
       // this.getGoods_changePage()
     },
-    removeProps(index){
+    removeProps(index) {
       // console.log(index)
-      this.options.props.splice(index,1)
+      this.options.props.splice(index, 1)
+    },
+
+    //根据综合 / 价格 排序
+    orderFn(flag) {
+      //这里会有一个bug 那就是 如果点击的是上下箭头而非Li
+      // 那么这个e.path[0].childNodes[0].data实际上是拿不到值而报错的
+      // 真实开发环境 应该可以使用data-* 或者index来解决
+      // 也可以用笨办法:分别给综合/价格绑定不同的事件,那么就不用判断点击的是哪个按钮了
+      // 所以我不准备解决这个bug了
+
+      // 我傻了 直接在组件上传递个确定值就行了啊!!擦
+
+      //当传过来的参数为1,即根据综合排序
+      if(flag === "1"){
+      // if (e.path[0].childNodes[0].data.startsWith('综合')) {
+        this.options.order = this.options.order.split(':')[1] === 'desc' ? "1:esc" : "1:desc"
+      }
+
+      //当传过来的参数为2,即根据价格排序
+      if(flag === "2"){
+      // if (e.path[0].childNodes[0].data.startsWith('价格')) {
+        this.options.order = this.options.order.split(':')[1] === 'desc' ? "2:esc" : "2:desc"
+      }
+
+      //根据相应的数据发送请求,由于我后台接口没做排序筛选,就不发送请求了
+
     }
   },
   computed: {
-    ...mapState({goods: state => state.search.goods})
+    ...mapState({goods: state => state.search.goods}),
+    orderClass(){
+      return this.options.order.split(':')[1]==='esc' ? 'icon-icon-arrow-top4' : 'icon-icon-arrow-btm4'
+    },
+
+    //个人遇到的坑:计算属性传递参数,是在返回的fun上面拿到的,并非外层函数!!!
+    isActive(){
+      return (flag)=>{
+        return this.options.order.split(':')[0]=== flag
+      }
+    }
   },
   watch: {
     //根据路由的更新来发送查询请求
@@ -179,7 +230,7 @@ export default {
         //这里有个需要修复的Bug:分页组件的状态不会自动变化
       },
       deep: true,
-      immediate:true
+      immediate: true
     }
   },
   created() {
