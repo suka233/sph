@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+//定义总线
+Vue.prototype.$bus = new Vue()
+
 //全局注册分页组件
 import Pagination from "components/Pagination"
 Vue.component("Pagination",Pagination)

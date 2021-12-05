@@ -3,7 +3,9 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide"
            v-for="(img,index) in skuInfo.skuImageList"
-           :key="index">
+           :key="index"
+           @click="changeImg(index)"
+      >
         <img :src="img.imgUrl">
       </div>
     </div>
@@ -22,6 +24,13 @@ import Swiper from 'swiper/swiper-bundle.min.js'
 export default {
   name: "ImageList",
   props: ["skuInfo"],
+  methods:{
+    changeImg(index){
+      //在总线上发布事件,载荷为index
+      this.$bus.$emit('detailCurrentImg',index)
+      //把这个index告知给zoom组件,让zoom组件渲染出相应的图片
+    }
+  },
   watch:{
     skuInfo:{
       handler(val){
