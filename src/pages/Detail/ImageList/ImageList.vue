@@ -35,7 +35,7 @@ export default {
     skuImageList:{
       handler(val){
         //val代表watch的最新值,如果skuImageList不是数组,为了减少$nextTick带来的资源浪费,直接不执行
-        // if(val.skuImageList.length <= 0) return
+        if(val.length <= 0) return
 
         //$nextTick中的回调,必定会等到banners数据变化所引起的界面更新完成后才会执行!
         this.$nextTick(()=>{
