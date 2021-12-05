@@ -1,9 +1,13 @@
 <template>
   <div class="spec-preview">
-    <img :src="skuInfo.skuImageList[currentIndex].imgUrl" />
+    <img
+        v-if="skuImageList[currentIndex]"
+        :src="skuImageList[currentIndex].imgUrl" />
     <div class="event"></div>
     <div class="big">
-      <img :src="skuInfo.skuImageList[currentIndex].imgUrl" />
+      <img
+          v-if="skuImageList[currentIndex]"
+          :src="skuImageList[currentIndex].imgUrl" />
     </div>
     <div class="mask"></div>
   </div>
@@ -18,22 +22,25 @@
 // 计算imgUrl地址这个事情交给模板上面的逻辑就行了,这样清楚又明了
 
 // 其实总线还涉及到污染全局,不好维护等事情,所以最好还是用vuex管理数据(我想用vuex来着,但是想着还是锻炼一下我不熟悉的总线模式)
-  export default {
+
+// 这里又遇到一个坑:控制台报错TypeError: Cannot read property 'imgUrl' of undefined
+// 奇怪的是,我已经在仓库定义了sukImageList为计算属性,如果为undefined,就返回空数组
+// 猜测虽然已经定义了sukImageList如果为undefined就返回空数组,但是并没有判断sukImageList[0]是undefined的情况
+// 上面的猜测可以用v-if验证:如果v-if="skuImageList" 依然会报错,只有当v-if="skuImageList[currentIndex]"时候,才不会报错
+// 所以原来数组的[]符号也算一个层级?!!
+import {mapGetters} from "vuex";
+
+export default {
     name: "Zoom",
-    props:["skuInfo"],
     data(){
       return{
-        skuInfoInner:'',
         currentIndex: 0
       }
     },
-
-    //这里在生命周期里转存一下props,避免在模板上使用数据的时候,props还没拿到的情况
-    created() {
-      this.skuInfoInner = this.skuInfo
+    computed:{
+      ...mapGetters(['skuImageList'])
     },
     mounted() {
-
       this.$bus.$on('detailCurrentImg',(index)=>{
         this.currentIndex = index
       })

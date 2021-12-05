@@ -1,8 +1,8 @@
 <template>
   <div class="swiper-container" ref="swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"
-           v-for="(img,index) in skuInfo.skuImageList"
+      <div class="swiper-slide active"
+           v-for="(img,index) in skuImageList"
            :key="index"
            @click="changeImg(index)"
       >
@@ -23,7 +23,7 @@ import Swiper from 'swiper/swiper-bundle.min.js'
 
 export default {
   name: "ImageList",
-  props: ["skuInfo"],
+  props: ["skuImageList"],
   methods:{
     changeImg(index){
       //在总线上发布事件,载荷为index
@@ -32,7 +32,7 @@ export default {
     }
   },
   watch:{
-    skuInfo:{
+    skuImageList:{
       handler(val){
         //val代表watch的最新值,如果skuImageList不是数组,为了减少$nextTick带来的资源浪费,直接不执行
         // if(val.skuImageList.length <= 0) return

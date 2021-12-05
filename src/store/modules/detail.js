@@ -30,10 +30,13 @@ export default {
     },
     getters: {
         categoryView(state){
-            return state.detail.categoryView ? state.detail.categoryView : ""
+            return state.detail.categoryView ? state.detail.categoryView : {}
         },
         skuInfo(state){
-            return state.detail.skuInfo ? state.detail.skuInfo : ""
+            return state.detail.skuInfo ? state.detail.skuInfo : {}
+        },
+        skuImageList(state,getters){
+            return getters.skuInfo.skuImageList ? getters.skuInfo.skuImageList : []
         }
     }
 }

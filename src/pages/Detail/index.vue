@@ -17,9 +17,10 @@
           <!-- 左侧放大镜区域 -->
           <div class="previewWrap">
             <!--放大镜效果-->
-            <Zoom :skuInfo="skuInfo"/>
+<!--            <Zoom :skuImageList="skuImageList"/>-->
+            <Zoom/>
             <!-- 小图列表 -->
-            <ImageList :skuInfo="skuInfo"/>
+            <ImageList :skuImageList="skuImageList"/>
           </div>
           <!-- 右侧选择区域布局 -->
           <div class="InfoWrap">
@@ -346,7 +347,7 @@ export default {
     ...mapState({
       detail: state => state.detail.detail
     }),
-    ...mapGetters(['categoryView', 'skuInfo']),
+    ...mapGetters(['categoryView', 'skuInfo','skuImageList']),
     //自动给价格前面加上￥符号
     price() {
       return `￥${this.skuInfo.price}`
