@@ -8,6 +8,8 @@ import mockAxios from './mockServer';
 export const getBaseCategoryList = () => apiAxios.get("/product/getBaseCategoryList")
 //getGoods
 export const getGoods = (body) => apiAxios.post("/list",body)
+//获取商品详情
+export const getDetail = (skuId) => apiAxios.get(`/item/:${skuId}`)
 
 //mock数据
 export const getBanners = () => mockAxios.get('/banners')

@@ -67,8 +67,12 @@
               <li class="yui3-u-1-5" v-for="(good,index) in goods.goodsList" :key="index">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"><img
-                        :src="good.defaultImg"/></a>
+                    <!--                    <a href="item.html" target="_blank"><img-->
+                    <!--                        :src="good.defaultImg"/></a>-->
+                    <router-link :to="`Detail/${good.id}`">
+                      <img
+                          :src="good.defaultImg"/>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -189,14 +193,14 @@ export default {
       // 我傻了 直接在组件上传递个确定值就行了啊!!擦
 
       //当传过来的参数为1,即根据综合排序
-      if(flag === "1"){
-      // if (e.path[0].childNodes[0].data.startsWith('综合')) {
+      if (flag === "1") {
+        // if (e.path[0].childNodes[0].data.startsWith('综合')) {
         this.options.order = this.options.order.split(':')[1] === 'desc' ? "1:esc" : "1:desc"
       }
 
       //当传过来的参数为2,即根据价格排序
-      if(flag === "2"){
-      // if (e.path[0].childNodes[0].data.startsWith('价格')) {
+      if (flag === "2") {
+        // if (e.path[0].childNodes[0].data.startsWith('价格')) {
         this.options.order = this.options.order.split(':')[1] === 'desc' ? "2:esc" : "2:desc"
       }
 
@@ -206,14 +210,14 @@ export default {
   },
   computed: {
     ...mapState({goods: state => state.search.goods}),
-    orderClass(){
-      return this.options.order.split(':')[1]==='esc' ? 'icon-icon-arrow-top4' : 'icon-icon-arrow-btm4'
+    orderClass() {
+      return this.options.order.split(':')[1] === 'esc' ? 'icon-icon-arrow-top4' : 'icon-icon-arrow-btm4'
     },
 
     //个人遇到的坑:计算属性传递参数,是在返回的fun上面拿到的,并非外层函数!!!
-    isActive(){
-      return (flag)=>{
-        return this.options.order.split(':')[0]=== flag
+    isActive() {
+      return (flag) => {
+        return this.options.order.split(':')[0] === flag
       }
     }
   },
