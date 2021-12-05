@@ -7,6 +7,14 @@ export default {
     mutations: {
         getDetail(state,detail){
             state.detail = detail
+        },
+        changeChecked(state,{indexWrap,indexInner}){
+            //先让同组的checked都变为0
+            state.detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList.forEach((item)=>{
+                item.isChecked ='0'
+            })
+            //再让选定的项目的checked都变为1
+            state.detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList[indexInner].isChecked = "1"
         }
     },
     actions: {
@@ -14,6 +22,10 @@ export default {
         async getDetail({commit},skuId){
             const {data} = await getDetail(skuId)
             commit('getDetail',data)
+        },
+        //更改相应的checked状态
+        changeChecked({commit},{indexWrap,indexInner}){
+            commit('changeChecked',{indexWrap,indexInner})
         }
     },
     getters: {

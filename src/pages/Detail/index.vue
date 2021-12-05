@@ -66,7 +66,10 @@
                 <div class="choosed"></div>
                 <dl v-for="(sku,indexWrap) in detail.spuSaleAttrList" :key="indexWrap">
                   <dt class="title">{{ sku.saleAttrName }}</dt>
-                  <dd changepirce="0" class="active" v-for="(spu,indexInner) in sku.spuSaleAttrValueList"
+                  <dd changepirce="0"
+                      @click="changeChecked({indexWrap,indexInner})"
+                      :class="isActive({indexWrap,indexInner})"
+                      v-for="(spu,indexInner) in sku.spuSaleAttrValueList"
                       :key="indexInner">{{ spu.saleAttrValueName }}
                   </dd>
                 </dl>
@@ -343,11 +346,19 @@ export default {
     ...mapState({
       detail: state => state.detail.detail
     }),
-    ...mapGetters(['categoryView','skuInfo']),
+    ...mapGetters(['categoryView', 'skuInfo']),
     //自动给价格前面加上￥符号
     price() {
       return `￥${this.skuInfo.price}`
+    },
+    //根据detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList[indexInner].isChecked判定是否该返回active
+    isActive() {
+      return ({indexWrap,indexInner})=>{
+        //如果全等于1 则返回active 否则返回空
+        return this.detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList[indexInner].isChecked === "1" ?  "active" :  ""
+      }
     }
+
   },
   components: {
     ImageList,
@@ -355,7 +366,10 @@ export default {
     TypeNav
   },
   methods: {
-    ...mapActions(["getDetail"])
+
+    //changeChecked:更改仓库中相应的isChecked数据
+    ...mapActions(["getDetail","changeChecked"]),
+
   },
   created() {
     //发送请求

@@ -18,6 +18,7 @@
         skuInfoInner:''
       }
     },
+    //这里在生命周期里转存一下props,避免在模板上使用数据的时候,props还没拿到的情况
     created() {
       this.skuInfoInner = this.skuInfo
     }
