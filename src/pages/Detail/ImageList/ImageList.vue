@@ -1,12 +1,15 @@
 <template>
   <div class="swiper-container" ref="swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide active"
+      <div class="swiper-slide"
+
            v-for="(img,index) in skuImageList"
            :key="index"
            @click="changeImg(index)"
       >
-        <img :src="img.imgUrl">
+        <img
+            :class="{active:currentIndex===index}"
+            :src="img.imgUrl">
       </div>
     </div>
     <div class="swiper-button-next"></div>
@@ -24,8 +27,14 @@ import Swiper from 'swiper/swiper-bundle.min.js'
 export default {
   name: "ImageList",
   props: ["skuImageList"],
+  data(){
+    return{
+      currentIndex:0
+    }
+  },
   methods:{
     changeImg(index){
+      this.currentIndex = index
       //在总线上发布事件,载荷为index
       this.$bus.$emit('detailCurrentImg',index)
       //把这个index告知给zoom组件,让zoom组件渲染出相应的图片
