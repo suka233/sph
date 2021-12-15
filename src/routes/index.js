@@ -3,6 +3,8 @@ import Login from 'pages/Login'
 import Register from 'pages/Register'
 import Search from 'pages/Search'
 import Detail from 'pages/Detail'
+import AddCartSuccess from 'pages/AddCartSuccess'
+import ShopCart from 'pages/ShopCart'
 
 export default [
     {path: "/Home", component: Home},
@@ -20,6 +22,12 @@ export default [
             category3id: route.query.category3id
         })
     },
-    {path:"/Detail/:skuId?",component: Detail,props:true},
+    {path: "/Detail/:skuId?", component: Detail, props: true},
+    {
+        path: "/AddCartSuccess", component: AddCartSuccess, props: route => ({
+            skuNum: route.query.skuNum
+        })
+    },
+    {path: "/ShopCart", component: ShopCart},
     {path: "/", redirect: "/Home"}//这里我把redirect的参数写成了空,显然没理解这个配置的意思,这个配置是将path路径重定向到redirect声明的路径下
 ]

@@ -17,7 +17,7 @@
           <!-- 左侧放大镜区域 -->
           <div class="previewWrap">
             <!--放大镜效果-->
-<!--            <Zoom :skuImageList="skuImageList"/>-->
+            <!--            <Zoom :skuImageList="skuImageList"/>-->
             <Zoom/>
             <!-- 小图列表 -->
             <ImageList :skuImageList="skuImageList"/>
@@ -77,12 +77,20 @@
               </div>
               <div class="cartWrap">
                 <div class="controls">
-                  <input autocomplete="off" class="itxt">
-                  <a href="javascript:" class="plus">+</a>
-                  <a href="javascript:" class="mins">-</a>
+                  <input autocomplete="off" class="itxt"
+                         v-model.number="skuNum"
+                         @keyup="skuNumCheck"
+                  >
+                  <a href="javascript:" class="plus"
+                     @click="skuNum++"
+                  >+</a>
+                  <a href="javascript:" class="mins"
+                     @click="skuNum>1 && skuNum--"
+                  >-</a>
                 </div>
                 <div class="add">
-                  <a href="javascript:">加入购物车</a>
+                  <!--                  <router-link :to="`/AddCartSuccess/${skuNum}`">加入购物车</router-link>-->
+                  <a href="javascript:" @click="toAddCartSuccess">加入购物车</a>
                 </div>
               </div>
             </div>
@@ -343,22 +351,27 @@ import {mapActions, mapState, mapGetters} from "vuex"
 export default {
   name: 'Detail',
   props: ["skuId"],
+  data() {
+    return {
+      skuNum: 1
+    }
+  },
   computed: {
     ...mapState({
       detail: state => state.detail.detail
     }),
-    ...mapGetters(['categoryView', 'skuInfo','skuImageList']),
+    ...mapGetters(['categoryView', 'skuInfo', 'skuImageList']),
     //自动给价格前面加上￥符号
     price() {
       return `￥${this.skuInfo.price}`
     },
     //根据detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList[indexInner].isChecked判定是否该返回active
     isActive() {
-      return ({indexWrap,indexInner})=>{
+      return ({indexWrap, indexInner}) => {
         //如果全等于1 则返回active 否则返回空
-        return this.detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList[indexInner].isChecked === "1" ?  "active" :  ""
+        return this.detail.spuSaleAttrList[indexWrap].spuSaleAttrValueList[indexInner].isChecked === "1" ? "active" : ""
       }
-    }
+    },
 
   },
   components: {
@@ -367,9 +380,30 @@ export default {
     TypeNav
   },
   methods: {
-
     //changeChecked:更改仓库中相应的isChecked数据
-    ...mapActions(["getDetail","changeChecked"]),
+    ...mapActions(["getDetail", "changeChecked", "addToCart"]),
+    //加入购物车数量框,验证数据
+    skuNumCheck() {
+      this.skuNum = this.skuNum.match(/\d/)
+    },
+    //跳转到加入购物车成功路由,分析得知,数量应该作为query放在url上
+    async toAddCartSuccess() {
+      let location = {
+        path: '/AddCartSuccess',
+      }
+      location.query = {skuNum: this.skuNum}
+
+
+      //调用addToCart Action 发送添加到购物车的请求
+      const code = await this.addToCart({skuId: this.skuId, skuNum: this.skuNum})
+
+      //把当前页面的数据skuInfo放入sessionStorage中,方便下一个页面拿到
+      sessionStorage.setItem('sph_skuInfo', JSON.stringify(this.skuInfo))
+
+      //路由的跳转放在最后 免得下个页面拿不到sessionStorage的数据
+      this.$router.push(location)
+
+    }
 
   },
   created() {

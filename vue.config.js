@@ -22,7 +22,8 @@ module.exports={
                 store:resolve("src/store"),
                 components:resolve("src/components"),
                 mock:resolve("src/mock"),
-                common:resolve("src/common")
+                common:resolve("src/common"),
+                utils:resolve('src/utils')
             }
         }
     }

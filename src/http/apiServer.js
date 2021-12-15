@@ -1,16 +1,21 @@
 import axios from 'axios';
 // const http = require('axios');
 
+//获取uuid
+import uuid from 'utils'
+
 //进度条组件
 import NProgress from 'nprogress';
 import "nprogress/nprogress.js";
 import "nprogress/nprogress.css";
 
-
 const axiosins = axios.create({
     baseURL:"/api", //这里写的api前缀怎么无效啊?已解决,之前写的是小写baseUrl导致失效
     timeout:15000
 })
+
+//设置全局请求头带上uuid
+axiosins.defaults.headers.common['Authorization'] = uuid;
 
 // 添加请求拦截器
 axiosins.interceptors.request.use(function (config) {

@@ -7,9 +7,14 @@ import mockAxios from './mockServer';
 //获取三级分类
 export const getBaseCategoryList = () => apiAxios.get("/product/getBaseCategoryList")
 //getGoods
-export const getGoods = (body) => apiAxios.post("/list",body)
+export const getGoods = (body) => apiAxios.post("/list", body)
 //获取商品详情
 export const getDetail = (skuId) => apiAxios.get(`/item/:${skuId}`)
+//添加到购物车
+export const addToCart = (skuId, skuNum) => apiAxios.post(`/cart/addToCart/:${skuId}/:${skuNum}`)
+//获取购物车列表
+export const getCartList = () => apiAxios.get(`/cart/cartList`)
+
 
 //mock数据
 export const getBanners = () => mockAxios.get('/banners')
